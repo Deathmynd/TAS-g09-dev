@@ -21,6 +21,7 @@ import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
@@ -1253,6 +1254,37 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 			log.error("Exception in oeDeleteCoordinator..." + e);
 			return new PtBoolean(false);
 		}
+	}
+	
+	/*
+	 * Quality insurance
+	 */
+	public PtBoolean oeSendQuestionsToHuman(ArrayList<String> questionsList) throws RemoteException {
+		try {
+			//PreP1
+			isSystemStarted();
+			//PreP2
+			isAdminLoggedIn();
+			int k=0;
+			
+			for(Map.Entry<String, CtHuman> entry : cmpSystemCtHuman.entrySet())
+			{
+				if (k == questionsList.size())
+					k=0;
+				DtSMS sms = new DtSMS(new PtString(questionsList.get(k)));
+				k++;
+				CtHuman human = entry.getValue();
+				//id == phoneNumber
+				ActComCompany company = assCtHumanActComCompany.get(human);
+				company.ieSmsSend(human.id, sms);
+			}
+
+			return new PtBoolean(true);
+		} catch (Exception e) {
+			log.error("Exception in oeDeleteCoordinator..." + e);
+			return new PtBoolean(false);
+		}
+		//return new PtBoolean(false);
 	}
 
 	/* (non-Javadoc)

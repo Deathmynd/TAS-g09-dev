@@ -360,6 +360,16 @@ public interface IcrashSystem extends Remote {
 	public PtBoolean oeDeleteCoordinator(DtCoordinatorID aDtCoordinatorID) throws RemoteException; 
 	
 	/**
+	 * Deletes a coordinator with the details specified.
+	 *
+	 * @param aDtCoordinatorID The coordiantor ID to delete from the system
+	 * @return The success of the method
+	 * @throws RemoteException Thrown if the server is offline
+	 */
+	public PtBoolean oeSendQuestionsToHuman(ArrayList<String> questionsList) throws RemoteException; 
+	
+	
+	/**
 	 * Runs the function of sollicitating crisis handling, if a crisis hasn't been handled with the delay, coordinators will be warned. If it passes max delax, it will be auto assigned out 
 	 *
 	 * @return The success of the method

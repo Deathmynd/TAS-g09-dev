@@ -14,6 +14,7 @@ package lu.uni.lassy.excalibur.examples.icrash.dev.java.environment.actors;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtCoordinatorID;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtLogin;
@@ -51,6 +52,15 @@ public interface ActAdministrator extends ActAuthenticated {
 			throws RemoteException, NotBoundException;
 	
 	/**
+	 * A message sent to the listening actor saying the coordinator was updated.
+	 *
+	 * @return The success of the method
+	 * @throws RemoteException Thrown if the server is offline
+	 */
+	public PtBoolean oeSendQuestionsToHuman(ArrayList<String> questionsList)
+			throws RemoteException, NotBoundException;
+	
+	/**
 	 * A message sent to the listening actor saying the coordinator was created .
 	 *
 	 * @return The success of the method
@@ -72,5 +82,6 @@ public interface ActAdministrator extends ActAuthenticated {
 	 * @return The success of the method
 	 * @throws RemoteException Thrown if the server is offline
 	 */
-	public PtBoolean ieCoordinatorUpdated() throws RemoteException;	
+	public PtBoolean ieCoordinatorUpdated() throws RemoteException;
+
 }

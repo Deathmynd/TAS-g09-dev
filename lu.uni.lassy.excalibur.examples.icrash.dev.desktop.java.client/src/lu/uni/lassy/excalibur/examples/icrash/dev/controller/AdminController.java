@@ -14,6 +14,7 @@ package lu.uni.lassy.excalibur.examples.icrash.dev.controller;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.Hashtable;
 
 import lu.uni.lassy.excalibur.examples.icrash.dev.controller.exceptions.IncorrectFormatException;
@@ -104,5 +105,23 @@ public class AdminController extends AbstractUserController {
 			}
 		}
 		return new PtBoolean(false);
+	}
+	
+	/*
+	 * Quality insurance
+	 */
+	public PtBoolean oeSendQuestionsToHuman(ArrayList<String> questionsList) throws ServerOfflineException, ServerNotBoundException, IncorrectFormatException{
+		ActProxyAdministratorImpl actorAdmin = (ActProxyAdministratorImpl)getAuth();
+		try {
+			return actorAdmin.oeSendQuestionsToHuman(questionsList);
+		} catch (RemoteException e) {
+			Log4JUtils.getInstance().getLogger().error(e);
+			throw new ServerOfflineException();
+		} catch (NotBoundException e) {
+			Log4JUtils.getInstance().getLogger().error(e);
+			throw new ServerNotBoundException();
+		}
+		
+		//return new PtBoolean(true);
 	}
 }

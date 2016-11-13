@@ -91,7 +91,7 @@ public class ICrashAdminGUIController extends AbstractAuthGUIController {
     /** The button that shows the controls for deleting a coordinator */
     @FXML
     private Button bttnBottomAdminCoordinatorDeleteACoordinator;
-
+	
     /** The tableview of the recieved messages from the system */
     @FXML
     private TableView<Message> tblvwAdminMessages;
@@ -120,7 +120,30 @@ public class ICrashAdminGUIController extends AbstractAuthGUIController {
     	showCoordinatorScreen(TypeOfEdit.Delete);
     }
 
-    /**
+    @FXML 
+    void bttnBottomAdminSendQuestionsToHumans_OnClick(ActionEvent event) {
+    	sendQuestionToHuman();
+    }
+    
+    private void sendQuestionToHuman() {
+		ArrayList<String> questionsList = new ArrayList<String>();
+		String question = "Estimate usefulness of system from 1 to 5";
+		questionsList.add(question);
+		question = "Estimate the speed of the answer of system from 1 to 5";
+		questionsList.add(question);
+
+		try{
+		if (userController.oeSendQuestionsToHuman(questionsList).getValue())
+			showOKMessage("All is good", "We send questions");
+		else
+			showErrorMessage("Unable to add coordinator", "An error occured when adding the coordinator");
+		} catch (ServerOfflineException | ServerNotBoundException | IncorrectFormatException e) {
+			showExceptionErrorMessage(e);
+		}	
+		
+	}
+
+	/**
      * The button event that will initiate the logging on of a user
      *
      * @param event The event type thrown, we do not need this, but it must be specified
@@ -161,7 +184,10 @@ public class ICrashAdminGUIController extends AbstractAuthGUIController {
 		Add,
 		
 		/** Deleting a coordinator. */
-		Delete
+		Delete,
+		
+		/** Send quewstions. */
+		SendQuestions
 	}
 	
 	/**
@@ -235,7 +261,9 @@ public class ICrashAdminGUIController extends AbstractAuthGUIController {
 		case Delete:
 			bttntypOK = new Button("Delete");
 			grdpn.add(bttntypOK, 1, 2);
-			break;		
+			break;
+		default:
+			break;
 		}
 		bttntypOK.setDefaultButton(true);
 		bttntypOK.setOnAction(new EventHandler<ActionEvent>() {
@@ -265,6 +293,8 @@ public class ICrashAdminGUIController extends AbstractAuthGUIController {
 							}
 							else
 								showErrorMessage("Unable to delete coordinator", "An error occured when deleting the coordinator");
+							break;
+						default:
 							break;
 						}
 					} catch (ServerOfflineException | ServerNotBoundException | IncorrectFormatException e) {
@@ -363,5 +393,6 @@ public class ICrashAdminGUIController extends AbstractAuthGUIController {
 			return new PtBoolean(false);
 		}
 		return new PtBoolean(false);
-	}	
+	}
+
 }
