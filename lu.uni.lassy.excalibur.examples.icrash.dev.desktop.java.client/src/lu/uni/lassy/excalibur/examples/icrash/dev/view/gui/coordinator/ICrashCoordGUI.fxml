@@ -132,8 +132,8 @@
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <TextField fx:id="txtfldCoordLogonUserName" promptText="Username" text="coord" GridPane.columnSpan="2" />
-                                    <PasswordField fx:id="psswrdfldCoordLogonPassword" promptText="Password" text="coord" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+                                    <TextField fx:id="txtfldCoordLogonUserName" promptText="Username" GridPane.columnSpan="2" />
+                                    <PasswordField fx:id="psswrdfldCoordLogonPassword" promptText="Password" GridPane.columnSpan="2" GridPane.rowIndex="1" />
                                     <Button fx:id="bttnCoordLogon" defaultButton="true" mnemonicParsing="false" onAction="#bttnCoordLogon_OnClick" text="Logon" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                        <font>
                                           <Font name="System Bold" size="12.0" />

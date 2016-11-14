@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.IcrashSystem;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.CtAdminQuestions;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.CtAdministrator;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtCoordinatorID;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtLogin;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPassword;
@@ -124,15 +126,38 @@ public class ActAdministratorImpl extends ActAuthenticatedImpl implements
 		//set up ActAuthenticated instance that performs the request
 		iCrashSys_Server.setCurrentRequestingAuthenticatedActor(this);
 
-		log.info("message ActAdministrator.oeDeleteCoordinator sent to system");
+		log.info("message ActAdministrator.oeSendQuestionsToHuman sent to system");
 		PtBoolean res = iCrashSys_Server.oeSendQuestionsToHuman(questionsList);
 
 		if (res.getValue() == true)
-			log.info("operation oeDeleteCoordinator successfully executed by the system");
+			log.info("operation oeSendQuestionsToHuman successfully executed by the system");
 
 		return res;
 	}
+	
+	synchronized public CtAdminQuestions oeGetStatisticOfAnswers()
+			throws RemoteException,	NotBoundException {
 
+		Logger log = Log4JUtils.getInstance().getLogger();
+
+		Registry registry = LocateRegistry.getRegistry(RmiUtils.getInstance().getHost(),RmiUtils.getInstance().getPort());
+
+		//Gathering the remote object as it was published into the registry
+		IcrashSystem iCrashSys_Server = (IcrashSystem) registry
+				.lookup("iCrashServer");
+
+		//set up ActAuthenticated instance that performs the request
+		iCrashSys_Server.setCurrentRequestingAuthenticatedActor(this);
+
+		log.info("message ActAdministrator.oeGetStatisticOfAnswers sent to system");
+		CtAdminQuestions res = iCrashSys_Server.oeGetStatisticOfAnswers();
+
+		if (res != null)
+			log.info("operation oeGetStatisticOfAnswers successfully executed by the system");
+
+		return res;
+	}
+	
 	/* (non-Javadoc)
 	 * @see lu.uni.lassy.excalibur.examples.icrash.dev.java.environment.actors.ActAdministrator#ieCoordinatorAdded()
 	 */

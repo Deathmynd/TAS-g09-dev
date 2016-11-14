@@ -23,6 +23,7 @@ import lu.uni.lassy.excalibur.examples.icrash.dev.controller.exceptions.ServerOf
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.environment.actors.ActAdministrator;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.environment.actors.ActProxyAuthenticated.UserType;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.design.JIntIs;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.CtAdminQuestions;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtCoordinatorID;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtLogin;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPassword;
@@ -124,4 +125,20 @@ public class AdminController extends AbstractUserController {
 		
 		//return new PtBoolean(true);
 	}
+	
+	public CtAdminQuestions oeGetStatisticOfAnswers() throws ServerOfflineException, ServerNotBoundException, IncorrectFormatException{
+		ActProxyAdministratorImpl actorAdmin = (ActProxyAdministratorImpl)getAuth();
+		try {
+			return actorAdmin.oeGetStatisticOfAnswers();
+		} catch (RemoteException e) {
+			Log4JUtils.getInstance().getLogger().error(e);
+			throw new ServerOfflineException();
+		} catch (NotBoundException e) {
+			Log4JUtils.getInstance().getLogger().error(e);
+			throw new ServerNotBoundException();
+		}
+		
+		//return new PtBoolean(true);
+	}
+	
 }

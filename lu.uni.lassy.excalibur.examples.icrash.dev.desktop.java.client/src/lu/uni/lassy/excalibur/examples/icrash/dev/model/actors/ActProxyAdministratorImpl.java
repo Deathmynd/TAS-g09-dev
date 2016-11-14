@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.environment.actors.ActAdministrator;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.environment.actors.ActProxyAdministrator;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.CtAdminQuestions;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtCoordinatorID;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtLogin;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPassword;
@@ -74,6 +75,15 @@ public class ActProxyAdministratorImpl extends ActProxyAuthenticatedImpl impleme
 			return new PtBoolean(false);
 	}
 
+	synchronized public CtAdminQuestions oeGetStatisticOfAnswers() throws RemoteException, NotBoundException{
+		if(getServerSideActor() !=null)
+		{
+			 return ((ActAdministrator) getServerSideActor()).oeGetStatisticOfAnswers();
+		}
+		else
+			return null;
+	}
+
 	/* (non-Javadoc)
 	 * @see lu.uni.lassy.excalibur.examples.icrash.dev.java.environment.actors.ActProxyAdministrator#ieCoordinatorAdded()
 	 */
@@ -112,4 +122,5 @@ public class ActProxyAdministratorImpl extends ActProxyAuthenticatedImpl impleme
 	public PtBoolean oeLogout() throws RemoteException, NotBoundException {
 		return super.oeLogout();
 	}
+
 }

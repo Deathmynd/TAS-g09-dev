@@ -15,6 +15,8 @@ import java.net.URL;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import lu.uni.lassy.excalibur.examples.icrash.dev.controller.AdminController;
@@ -25,7 +27,9 @@ import lu.uni.lassy.excalibur.examples.icrash.dev.controller.exceptions.ServerNo
 import lu.uni.lassy.excalibur.examples.icrash.dev.controller.exceptions.ServerOfflineException;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.environment.actors.ActAdministrator;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.design.JIntIsActor;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.CtAdminQuestions;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtCoordinatorID;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtQuestion;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.PtBoolean;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.PtString;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.utils.Log4JUtils;
@@ -125,7 +129,43 @@ public class ICrashAdminGUIController extends AbstractAuthGUIController {
     	sendQuestionToHuman();
     }
     
-    private void sendQuestionToHuman() {
+
+	@FXML
+	void bttnBottomGetStatisticOfAnswers_OnClick(ActionEvent event) {
+		getStatisticOfAnswers();
+	}
+    
+	private void getStatisticOfAnswers() {
+		try {
+			CtAdminQuestions statisticOfAnswers = userController.oeGetStatisticOfAnswers();
+			if (statisticOfAnswers != null)
+			{
+				String answer = "";
+				Hashtable <Integer, DtQuestion> tableQuestions = statisticOfAnswers.getHashtable();
+				for (Map.Entry<Integer, DtQuestion> entry : tableQuestions.entrySet())
+				{
+					DtQuestion question = entry.getValue();
+					answer = answer + question.value.getValue()+"\n";
+					for (int j = question.getMinAnswerValue(); j<=question.getMaxAnswerValue();j++)
+					{
+						Integer intAnswer = new Integer(question.getAnswer(j));
+						if (intAnswer != 0)
+						{
+							answer = answer + Integer.toString(j) + ": " + intAnswer.toString() + "\n"; 
+						}
+					}
+					
+				}
+				showOKMessage("All is good", answer);
+			}
+			else
+				showErrorMessage("Unable to add coordinator", "An error occured when adding the coordinator");
+		} catch (ServerOfflineException | ServerNotBoundException | IncorrectFormatException e) {
+			showExceptionErrorMessage(e);
+		}	
+	}
+
+	private void sendQuestionToHuman() {
 		ArrayList<String> questionsList = new ArrayList<String>();
 		String question = "Estimate usefulness of system from 1 to 5";
 		questionsList.add(question);

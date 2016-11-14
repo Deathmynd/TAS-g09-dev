@@ -40,6 +40,7 @@ import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.db.DbComCompanies;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.db.DbCoordinators;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.db.DbCrises;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.db.DbHumans;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.CtAdminQuestions;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.CtAdministrator;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.CtAlert;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.CtAuthenticated;
@@ -681,6 +682,7 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 								intComment <= aDtQuestion.getMaxAnswerValue())
 						{
 							aDtQuestion.putAnswer(intComment);
+							return new PtBoolean(true);
 						}
 					}
 					catch (NumberFormatException e)
@@ -1341,6 +1343,23 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 		//return new PtBoolean(false);
 	}
 
+	public CtAdminQuestions oeGetStatisticOfAnswers() throws RemoteException {
+		try {
+			//PreP1
+			isSystemStarted();
+			//PreP2
+			isAdminLoggedIn();
+
+			CtAdminQuestions adminQuestions = new CtAdminQuestions();
+			adminQuestions.init(cmpAdministratorQuestions);
+			return adminQuestions;
+		} catch (Exception e) {
+			log.error("Exception in oeDeleteCoordinator..." + e);
+			return null;
+		}
+		//return new PtBoolean(false);
+	}
+	
 	/* (non-Javadoc)
 	 * @see lu.uni.lassy.excalibur.examples.icrash.dev.java.system.IcrashSystem#oeUpdateCoordinator(lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtCoordinatorID, lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtLogin, lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPassword)
 	 */

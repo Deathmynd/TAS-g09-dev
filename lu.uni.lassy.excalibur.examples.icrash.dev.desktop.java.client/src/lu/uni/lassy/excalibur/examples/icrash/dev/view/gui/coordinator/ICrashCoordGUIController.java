@@ -493,8 +493,8 @@ public class ICrashCoordGUIController extends AbstractAuthGUIController {
 			cmbbxCrisisStatus.setValue(EtCrisisStatus.pending);
 		}
 		else{
-			txtfldCoordLogonUserName.setText("");
-			psswrdfldCoordLogonPassword.setText("");
+			txtfldCoordLogonUserName.setText("coord");
+			psswrdfldCoordLogonPassword.setText("coord");
 			txtfldCoordLogonUserName.requestFocus();
 			
 		}

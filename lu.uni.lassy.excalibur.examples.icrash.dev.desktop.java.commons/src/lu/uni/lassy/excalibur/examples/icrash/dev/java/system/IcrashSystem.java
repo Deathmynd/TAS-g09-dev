@@ -21,6 +21,7 @@ import lu.uni.lassy.excalibur.examples.icrash.dev.java.environment.actors.ActAdm
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.environment.actors.ActAuthenticated;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.environment.actors.ActComCompany;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.environment.actors.ActCoordinator;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.CtAdminQuestions;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.CtAdministrator;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.CtAlert;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.CtAuthenticated;
@@ -360,13 +361,22 @@ public interface IcrashSystem extends Remote {
 	public PtBoolean oeDeleteCoordinator(DtCoordinatorID aDtCoordinatorID) throws RemoteException; 
 	
 	/**
-	 * Deletes a coordinator with the details specified.
+	 * Send sms with question to all registered humans.
 	 *
-	 * @param aDtCoordinatorID The coordiantor ID to delete from the system
+	 * @param questionsList List of questions
 	 * @return The success of the method
 	 * @throws RemoteException Thrown if the server is offline
 	 */
 	public PtBoolean oeSendQuestionsToHuman(ArrayList<String> questionsList) throws RemoteException; 
+	
+	/**
+	 * Get Answers of questions.
+	 *
+	 * @return The class with answers of questions
+	 * @throws RemoteException Thrown if the server is offline
+	 */
+	public CtAdminQuestions oeGetStatisticOfAnswers() throws RemoteException; 
+	
 	
 	
 	/**
