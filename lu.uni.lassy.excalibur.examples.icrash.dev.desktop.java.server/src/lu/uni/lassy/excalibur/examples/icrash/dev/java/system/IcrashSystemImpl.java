@@ -55,6 +55,7 @@ import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtGP
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtLogin;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPassword;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPhoneNumber;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtQuestion;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtAlertStatus;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtCrisisStatus;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtCrisisType;
@@ -113,6 +114,9 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 	
 	/**  A hashtable of the actor com companies in the system, stored by their name as a key. */
 	Hashtable<String, ActComCompany> cmpSystemActComCompany = new Hashtable<String, ActComCompany>();
+	
+	/** A hashtable of the questions which sended by administrator */
+	Hashtable<Integer,DtQuestion> cmpAdministratorQuestions = new Hashtable<Integer,DtQuestion>();
 
 	// Messir associations	
 	/**  A hashtable of the joint alerts and crises in the system, stored by their alert as a key. */
@@ -132,6 +136,9 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 	
 	/**  A hashtable of the joint humans and Actor com companies in the system, stored by the human as a key. */
 	Hashtable<CtHuman, ActComCompany> assCtHumanActComCompany = new Hashtable<CtHuman, ActComCompany>();
+	
+	/**  A hashtable of the joint humans and questions, which sended them, stored by the human as a key */
+	Hashtable<CtHuman, Integer> assCtHumanDtQuestion = new Hashtable<CtHuman,Integer>();
 	
 	/** The logger user by the system to print information to the console. */
 	private Logger log = Log4JUtils.getInstance().getLogger();
@@ -1267,15 +1274,25 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 			isAdminLoggedIn();
 			int k=0;
 			
+			//Init questionsList
+			for (String question : questionsList)
+			{
+				cmpAdministratorQuestions.put(k,new DtQuestion(new PtString(question)));
+				k++;
+			}
+			k=0;
+			
 			for(Map.Entry<String, CtHuman> entry : cmpSystemCtHuman.entrySet())
 			{
-				if (k == questionsList.size())
+				if (k == cmpAdministratorQuestions.size())
 					k=0;
 				DtSMS sms = new DtSMS(new PtString(questionsList.get(k)));
 				k++;
 				CtHuman human = entry.getValue();
 				//id == phoneNumber
 				ActComCompany company = assCtHumanActComCompany.get(human);
+				
+				assCtHumanDtQuestion.put(human,k);
 				company.ieSmsSend(human.id, sms);
 			}
 
