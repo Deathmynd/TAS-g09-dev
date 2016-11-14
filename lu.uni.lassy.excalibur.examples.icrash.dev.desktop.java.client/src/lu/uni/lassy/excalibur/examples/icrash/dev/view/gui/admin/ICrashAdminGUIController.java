@@ -208,8 +208,8 @@ public class ICrashAdminGUIController extends AbstractAuthGUIController {
 		bttnAdminLogoff.setDisable(!loggedOn);
 		bttnAdminLogin.setDefaultButton(!loggedOn);
 		if (!loggedOn){
-			txtfldAdminUserName.setText("");
-			psswrdfldAdminPassword.setText("");
+			txtfldAdminUserName.setText("icrashadmin");
+			psswrdfldAdminPassword.setText("7WXC1359");
 			txtfldAdminUserName.requestFocus();
 			for (int i = anchrpnCoordinatorDetails.getChildren().size() -1; i >= 0; i--)
 				anchrpnCoordinatorDetails.getChildren().remove(i);
@@ -246,6 +246,7 @@ public class ICrashAdminGUIController extends AbstractAuthGUIController {
 		TextField txtfldUserName = new TextField();
 		PasswordField psswrdfldPassword = new PasswordField();
 		txtfldUserID.setPromptText("User ID");
+		txtfldUserID.setText("1");
 		Button bttntypOK = null;
 		GridPane grdpn = new GridPane();
 		grdpn.add(txtfldUserID, 1, 1);
@@ -253,7 +254,9 @@ public class ICrashAdminGUIController extends AbstractAuthGUIController {
 		case Add:
 			bttntypOK = new Button("Create");
 			txtfldUserName.setPromptText("User name");
+			txtfldUserName.setText("coord");
 			psswrdfldPassword.setPromptText("Password");
+			psswrdfldPassword.setText("coord");
 			grdpn.add(txtfldUserName, 1, 2);
 			grdpn.add(psswrdfldPassword, 1, 3);
 			grdpn.add(bttntypOK, 1, 4);

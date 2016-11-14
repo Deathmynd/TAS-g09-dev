@@ -1,13 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="500.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lu.uni.lassy.excalibur.examples.icrash.dev.view.gui.coordinator.ICrashCoordGUIController">
+<AnchorPane prefHeight="500.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lu.uni.lassy.excalibur.examples.icrash.dev.view.gui.coordinator.ICrashCoordGUIController">
    <children>
       <SplitPane dividerPositions="0.6204819277108434" orientation="VERTICAL" prefHeight="509.0" prefWidth="748.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
@@ -122,8 +132,8 @@
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <TextField fx:id="txtfldCoordLogonUserName" promptText="Username" GridPane.columnSpan="2" />
-                                    <PasswordField fx:id="psswrdfldCoordLogonPassword" promptText="Password" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+                                    <TextField fx:id="txtfldCoordLogonUserName" promptText="Username" text="coord" GridPane.columnSpan="2" />
+                                    <PasswordField fx:id="psswrdfldCoordLogonPassword" promptText="Password" text="coord" GridPane.columnSpan="2" GridPane.rowIndex="1" />
                                     <Button fx:id="bttnCoordLogon" defaultButton="true" mnemonicParsing="false" onAction="#bttnCoordLogon_OnClick" text="Logon" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                        <font>
                                           <Font name="System Bold" size="12.0" />

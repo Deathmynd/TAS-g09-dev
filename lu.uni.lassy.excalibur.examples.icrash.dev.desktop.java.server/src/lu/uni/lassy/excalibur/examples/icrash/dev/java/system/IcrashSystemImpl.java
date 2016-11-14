@@ -655,6 +655,42 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 		try{
 			//PreP1
 			isSystemStarted();
+			
+			CtHuman myCtHuman = new CtHuman();
+			boolean myExistsHuman = false;
+	
+			//check if there already exists a human who reported an Alert 
+			for (CtHuman existingHuman : assCtHumanActComCompany.keySet()) {
+				String exPhoneNumber = existingHuman.id.value.getValue();
+				if (exPhoneNumber.equals(aDtPhoneNumber.value.getValue())) {
+					myCtHuman = existingHuman;
+					myExistsHuman = true;
+					break;
+				}
+			}
+			
+			if (myExistsHuman)
+			{
+				Integer questionId = assCtHumanDtQuestion.get(myCtHuman);
+				if (questionId != null)
+				{
+					try{
+						DtQuestion aDtQuestion = cmpAdministratorQuestions.get(questionId);
+						int intComment = Integer.parseInt(aDtComment.value.getValue());
+						if (aDtQuestion.getMinAnswerValue() <= intComment &&
+								intComment <= aDtQuestion.getMaxAnswerValue())
+						{
+							aDtQuestion.putAnswer(intComment);
+						}
+					}
+					catch (NumberFormatException e)
+					{
+						log.error("Integer value is not finding in sms (oeAlert)..." + e);
+					}
+				}
+			}
+			
+			
 			DtDateAndTime aInstant = new DtDateAndTime(aDtDate, aDtTime);
 			int nextValueForAlertID_at_pre = ctState.nextValueForAlertID.value
 					.getValue();
@@ -1287,12 +1323,13 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 				if (k == cmpAdministratorQuestions.size())
 					k=0;
 				DtSMS sms = new DtSMS(new PtString(questionsList.get(k)));
-				k++;
 				CtHuman human = entry.getValue();
 				//id == phoneNumber
 				ActComCompany company = assCtHumanActComCompany.get(human);
 				
 				assCtHumanDtQuestion.put(human,k);
+
+				k++;
 				company.ieSmsSend(human.id, sms);
 			}
 

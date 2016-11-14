@@ -18,7 +18,10 @@ public class DtQuestion extends DtString implements JIntIs{
 	private int _maxLength = 255;
 	
 	/**amount of possible answers */
-	private int possibleAnswers = 5;
+	private int maxAnswerValue = 5;
+
+	private int minAnswerValue = 1;
+	
 	
 	/** Statistics of answers */
 	
@@ -32,7 +35,7 @@ public class DtQuestion extends DtString implements JIntIs{
 	public DtQuestion(PtString s) {
 		super(s);
 		
-		for (int i =0; i<possibleAnswers; i++)
+		for (int i = minAnswerValue; i<=maxAnswerValue; i++)
 		{
 			answersStatistic.put(i, 0);
 		}
@@ -51,7 +54,7 @@ public class DtQuestion extends DtString implements JIntIs{
 	 */
 	public PtBoolean putAnswer(Integer key)
 	{
-		if (answersStatistic.get(key) != 0)
+		if (minAnswerValue <= key && key <= maxAnswerValue)
 		{
 			answersStatistic.put(key, answersStatistic.get(key)+1);
 			return new PtBoolean(true);
@@ -65,7 +68,7 @@ public class DtQuestion extends DtString implements JIntIs{
 	public int getSizeOfAnswers()
 	{
 		int size = 0;
-		for (int i =0; i<possibleAnswers; i++)
+		for (int i =0; i<maxAnswerValue; i++)
 		{
 			size += answersStatistic.get(i);
 		}
@@ -79,6 +82,16 @@ public class DtQuestion extends DtString implements JIntIs{
 	public int getAnswer(int key)
 	{
 		return answersStatistic.get(key);
+	}
+	
+	public int getMinAnswerValue()
+	{
+		return minAnswerValue;
+	}
+	
+	public int getMaxAnswerValue()
+	{
+		return maxAnswerValue;
 	}
 	
 }
