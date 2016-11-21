@@ -1319,7 +1319,7 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 				k++;
 			}
 			k=0;
-			
+			//Associate Humans with questions
 			for(Map.Entry<String, CtHuman> entry : cmpSystemCtHuman.entrySet())
 			{
 				if (k == cmpAdministratorQuestions.size())

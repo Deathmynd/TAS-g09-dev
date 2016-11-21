@@ -8,7 +8,7 @@ import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.PtBoolean;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.PtString;
 
 /**
- * The Class DtLogin, which holds a datatype of the Question to human.
+ * The Class DtQuestion, which holds a datatype of the Question to human.
  */
 public class DtQuestion extends DtString implements JIntIs{
 	/** The Constant serialVersionUID. */
@@ -42,6 +42,9 @@ public class DtQuestion extends DtString implements JIntIs{
 	}
 	
 
+	/**
+	 * 
+	 */
 	public PtBoolean is() {
 		return new PtBoolean(this.value.getValue().length() <= _maxLength);
 	}
