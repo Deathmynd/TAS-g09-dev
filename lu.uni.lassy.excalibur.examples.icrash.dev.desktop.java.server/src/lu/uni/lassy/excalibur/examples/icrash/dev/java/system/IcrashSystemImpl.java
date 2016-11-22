@@ -117,6 +117,7 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 	Hashtable<String, ActComCompany> cmpSystemActComCompany = new Hashtable<String, ActComCompany>();
 	
 	/** A hashtable of the questions which sended by administrator */
+	//!Masha!!!!!!!!!!!!!!!!!!
 	Hashtable<Integer,DtQuestion> cmpAdministratorQuestions = new Hashtable<Integer,DtQuestion>();
 
 	// Messir associations	
@@ -649,6 +650,7 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 	/* (non-Javadoc)
 	 * @see lu.uni.lassy.excalibur.examples.icrash.dev.java.system.IcrashSystem#oeAlert(lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtHumanKind, lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.DtDate, lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.DtTime, lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPhoneNumber, lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtGPSLocation, lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtComment)
 	 */
+	//!Masha!!!!!!!!!!!!!!!!!!
 	public  synchronized PtBoolean oeAlert(EtHumanKind aEtHumanKind, DtDate aDtDate,
 			DtTime aDtTime, DtPhoneNumber aDtPhoneNumber,
 			DtGPSLocation aDtGPSLocation, DtComment aDtComment)
@@ -657,6 +659,7 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 			//PreP1
 			isSystemStarted();
 			
+			//!Masha!!!!!!!!!!!!!!!!!!
 			CtHuman myCtHuman = new CtHuman();
 			boolean myExistsHuman = false;
 	
@@ -670,6 +673,7 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 				}
 			}
 			
+			//if the person received a question
 			if (myExistsHuman)
 			{
 				Integer questionId = assCtHumanDtQuestion.get(myCtHuman);
@@ -691,7 +695,7 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 					}
 				}
 			}
-			
+			//!Masha!!!!!!!!!!!!!!!!!!
 			
 			DtDateAndTime aInstant = new DtDateAndTime(aDtDate, aDtTime);
 			int nextValueForAlertID_at_pre = ctState.nextValueForAlertID.value
@@ -1304,6 +1308,7 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 	/*
 	 * Quality insurance
 	 */
+	//!Masha!!!!!!!!!!!!!!!!!!
 	public PtBoolean oeSendQuestionsToHuman(ArrayList<String> questionsList) throws RemoteException {
 		try {
 			//PreP1

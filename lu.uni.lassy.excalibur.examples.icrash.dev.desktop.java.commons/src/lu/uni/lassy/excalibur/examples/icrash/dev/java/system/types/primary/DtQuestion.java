@@ -25,6 +25,7 @@ public class DtQuestion extends DtString implements JIntIs{
 	
 	/** Statistics of answers */
 	
+	//Здесь статистика ответов "номер ответа: количество ответов"
 	private Hashtable<Integer,Integer> answersStatistic = new Hashtable<Integer, Integer>();
 	
 	/**
@@ -50,7 +51,7 @@ public class DtQuestion extends DtString implements JIntIs{
 	}
 	
 	/**
-	 * Inskrement the counter of answer
+	 * Inkrement the counter of answer
 	 * @param key The value of answer
 	 * @return true, if counter incremented
 	 * 			false, if answer doesn't exist

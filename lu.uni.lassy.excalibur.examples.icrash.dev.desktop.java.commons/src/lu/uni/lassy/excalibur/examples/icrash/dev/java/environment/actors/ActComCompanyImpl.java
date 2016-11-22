@@ -143,6 +143,7 @@ public class ActComCompanyImpl extends UnicastRemoteObject implements ActComComp
 			try {
 				aProxy.ieSmsSend(aDtPhoneNumber, aDtSMS);
 				messageSent = true;
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			} catch (RemoteException e) {
 				//Most likely the client that created the listener disconnected, so we shall remove it
 				log.error(e);

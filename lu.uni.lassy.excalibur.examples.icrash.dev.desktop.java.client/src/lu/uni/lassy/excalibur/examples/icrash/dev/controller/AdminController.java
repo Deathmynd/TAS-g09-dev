@@ -111,9 +111,12 @@ public class AdminController extends AbstractUserController {
 	/*
 	 * Quality insurance
 	 */
+	//!Masha!!!!!!!!!!!!!!!!!!
+	//questions - список вопросов
 	public PtBoolean oeSendQuestionsToHuman(ArrayList<String> questionsList) throws ServerOfflineException, ServerNotBoundException, IncorrectFormatException{
 		ActProxyAdministratorImpl actorAdmin = (ActProxyAdministratorImpl)getAuth();
 		try {
+			//!Masha!!!!!!!!!!!!!!!!!!
 			return actorAdmin.oeSendQuestionsToHuman(questionsList);
 		} catch (RemoteException e) {
 			Log4JUtils.getInstance().getLogger().error(e);

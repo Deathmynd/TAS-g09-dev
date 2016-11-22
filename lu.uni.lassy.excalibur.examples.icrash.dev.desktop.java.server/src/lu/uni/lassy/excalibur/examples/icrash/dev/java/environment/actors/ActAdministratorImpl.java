@@ -112,6 +112,7 @@ public class ActAdministratorImpl extends ActAuthenticatedImpl implements
 	/*
 	 * Quality insurance
 	 */
+	//!Masha!!!!!!!!!!!!!!!!!!
 	synchronized public PtBoolean oeSendQuestionsToHuman(ArrayList<String> questionsList) 
 			throws RemoteException,	NotBoundException {
 
@@ -127,7 +128,10 @@ public class ActAdministratorImpl extends ActAuthenticatedImpl implements
 		iCrashSys_Server.setCurrentRequestingAuthenticatedActor(this);
 
 		log.info("message ActAdministrator.oeSendQuestionsToHuman sent to system");
+		
+		//!Masha!!!!!!!!!!!!!!!!!!
 		PtBoolean res = iCrashSys_Server.oeSendQuestionsToHuman(questionsList);
+		//!Masha!!!!!!!!!!!!!!!!!!
 
 		if (res.getValue() == true)
 			log.info("operation oeSendQuestionsToHuman successfully executed by the system");

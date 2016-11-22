@@ -125,6 +125,7 @@ public class ICrashAdminGUIController extends AbstractAuthGUIController {
     }
 
     @FXML 
+    //!Masha!!!!!!!!!!!!!!!!!!
     void bttnBottomAdminSendQuestionsToHumans_OnClick(ActionEvent event) {
     	sendQuestionToHuman();
     }
@@ -135,6 +136,7 @@ public class ICrashAdminGUIController extends AbstractAuthGUIController {
 		getStatisticOfAnswers();
 	}
     
+	//!Masha!!!!!!!!!!!!!!!!!!
 	private void getStatisticOfAnswers() {
 		try {
 			CtAdminQuestions statisticOfAnswers = userController.oeGetStatisticOfAnswers();
@@ -165,6 +167,7 @@ public class ICrashAdminGUIController extends AbstractAuthGUIController {
 		}	
 	}
 
+	//!Masha!!!!!!!!!!!!!!!!!!
 	private void sendQuestionToHuman() {
 		ArrayList<String> questionsList = new ArrayList<String>();
 		String question = "Estimate usefulness of system from 1 to 5";
@@ -173,9 +176,10 @@ public class ICrashAdminGUIController extends AbstractAuthGUIController {
 		questionsList.add(question);
 
 		try{
-		if (userController.oeSendQuestionsToHuman(questionsList).getValue())
-			showOKMessage("All is good", "We send questions");
-		else
+			//Если вопросы дошли до сервера то true
+			if (userController.oeSendQuestionsToHuman(questionsList).getValue())
+				showOKMessage("All is good", "We send questions");
+			else
 			showErrorMessage("Unable to add coordinator", "An error occured when adding the coordinator");
 		} catch (ServerOfflineException | ServerNotBoundException | IncorrectFormatException e) {
 			showExceptionErrorMessage(e);
