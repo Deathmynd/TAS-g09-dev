@@ -66,6 +66,13 @@ public class DtQuestion extends DtString implements JIntIs{
 		return new PtBoolean(false);
 	}
 	
+	public PtBoolean putTableWithAnswers(Hashtable<Integer,Integer> newTable)
+	{
+		answersStatistic = newTable;
+		
+		return new PtBoolean(true);
+	}
+	
 	/**
 	 * @return The number of the answered humans
 	 */
