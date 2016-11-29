@@ -118,7 +118,7 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 	
 	/** A hashtable of the questions which sended by administrator */
 	//!Masha!!!!!!!!!!!!!!!!!!
-	Hashtable<Integer,DtQuestion> cmpAdministratorQuestions = new Hashtable<Integer,DtQuestion>();
+	CtAdminQuestions cmpAdministratorQuestions = new CtAdminQuestions();
 
 	// Messir associations	
 	/**  A hashtable of the joint alerts and crises in the system, stored by their alert as a key. */
@@ -140,7 +140,7 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 	Hashtable<CtHuman, ActComCompany> assCtHumanActComCompany = new Hashtable<CtHuman, ActComCompany>();
 	
 	/**  A hashtable of the joint humans and questions, which sended them, stored by the human as a key */
-	Hashtable<CtHuman, Integer> assCtHumanDtQuestion = new Hashtable<CtHuman,Integer>();
+	Hashtable<CtHuman, PtInteger> assCtHumanDtQuestion = new Hashtable<CtHuman,PtInteger>();
 	
 	/** The logger user by the system to print information to the console. */
 	private Logger log = Log4JUtils.getInstance().getLogger();
@@ -676,11 +676,11 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 			//if the person received a question
 			if (myExistsHuman)
 			{
-				Integer questionId = assCtHumanDtQuestion.get(myCtHuman);
+				PtInteger questionId = assCtHumanDtQuestion.get(myCtHuman);
 				if (questionId != null)
 				{
 					try{
-						DtQuestion aDtQuestion = cmpAdministratorQuestions.get(questionId);
+						DtQuestion aDtQuestion = cmpAdministratorQuestions.getQuestion(questionId);
 						int intComment = Integer.parseInt(aDtComment.value.getValue());
 						if (aDtQuestion.getMinAnswerValue() <= intComment &&
 								intComment <= aDtQuestion.getMaxAnswerValue())
@@ -1309,32 +1309,30 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 	 * Quality insurance
 	 */
 	//!Masha!!!!!!!!!!!!!!!!!!
-	public PtBoolean oeSendQuestionsToHuman(ArrayList<String> questionsList) throws RemoteException {
+	public PtBoolean oeSendQuestionsToHuman(CtAdminQuestions questionsList) throws RemoteException {
 		try {
 			//PreP1
 			isSystemStarted();
 			//PreP2
 			isAdminLoggedIn();
-			int k=0;
+			int k;
 			
 			//Init questionsList
-			for (String question : questionsList)
-			{
-				cmpAdministratorQuestions.put(k,new DtQuestion(new PtString(question)));
-				k++;
-			}
+			cmpAdministratorQuestions = questionsList;
+
 			k=0;
 			//Associate Humans with questions
 			for(Map.Entry<String, CtHuman> entry : cmpSystemCtHuman.entrySet())
 			{
 				if (k == cmpAdministratorQuestions.size())
 					k=0;
-				DtSMS sms = new DtSMS(new PtString(questionsList.get(k)));
+				PtString smsString = cmpAdministratorQuestions.getQuestion(new PtInteger(k)).value;
+				DtSMS sms = new DtSMS(smsString);
 				CtHuman human = entry.getValue();
 				//id == phoneNumber
 				ActComCompany company = assCtHumanActComCompany.get(human);
 				
-				assCtHumanDtQuestion.put(human,k);
+				assCtHumanDtQuestion.put(human,new PtInteger(k));
 
 				k++;
 				company.ieSmsSend(human.id, sms);
@@ -1342,7 +1340,7 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 
 			return new PtBoolean(true);
 		} catch (Exception e) {
-			log.error("Exception in oeDeleteCoordinator..." + e);
+			log.error("Exception in oeSendQuestionsToHuman..." + e);
 			return new PtBoolean(false);
 		}
 		//return new PtBoolean(false);
@@ -1355,9 +1353,7 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 			//PreP2
 			isAdminLoggedIn();
 
-			CtAdminQuestions adminQuestions = new CtAdminQuestions();
-			adminQuestions.init(cmpAdministratorQuestions);
-			return adminQuestions;
+			return cmpAdministratorQuestions;			
 		} catch (Exception e) {
 			log.error("Exception in oeDeleteCoordinator..." + e);
 			return null;

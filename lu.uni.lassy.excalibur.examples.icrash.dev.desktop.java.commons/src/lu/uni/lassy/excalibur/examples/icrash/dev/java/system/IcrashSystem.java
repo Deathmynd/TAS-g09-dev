@@ -367,7 +367,7 @@ public interface IcrashSystem extends Remote {
 	 * @return The success of the method
 	 * @throws RemoteException Thrown if the server is offline
 	 */
-	public PtBoolean oeSendQuestionsToHuman(ArrayList<String> questionsList) throws RemoteException; 
+	public PtBoolean oeSendQuestionsToHuman(CtAdminQuestions questionsList) throws RemoteException; 
 	
 	/**
 	 * Get Answers of questions.

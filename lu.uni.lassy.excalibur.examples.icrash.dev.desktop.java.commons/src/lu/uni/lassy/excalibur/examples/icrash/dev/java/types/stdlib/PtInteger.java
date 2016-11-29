@@ -42,5 +42,20 @@ public class PtInteger implements Serializable {
 	public int getValue(){
 		return value;
 	}
+	
+	@Override
+	public boolean equals(Object obj){
+		if (!(obj instanceof PtInteger))
+			return false;
+		PtInteger aInteger = (PtInteger)obj;
+		if (aInteger.value != this.value )
+			return false;
+		return true;
+	}
+	
+	@Override
+	public int hashCode(){
+	    return value;
+	}
 
 }

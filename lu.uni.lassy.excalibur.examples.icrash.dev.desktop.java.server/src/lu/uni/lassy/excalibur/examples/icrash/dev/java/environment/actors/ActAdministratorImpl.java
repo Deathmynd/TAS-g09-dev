@@ -113,7 +113,7 @@ public class ActAdministratorImpl extends ActAuthenticatedImpl implements
 	 * Quality insurance
 	 */
 	//!Masha!!!!!!!!!!!!!!!!!!
-	synchronized public PtBoolean oeSendQuestionsToHuman(ArrayList<String> questionsList) 
+	synchronized public PtBoolean oeSendQuestionsToHuman(CtAdminQuestions questionsList) 
 			throws RemoteException,	NotBoundException {
 
 		Logger log = Log4JUtils.getInstance().getLogger();

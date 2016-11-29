@@ -113,7 +113,7 @@ public class AdminController extends AbstractUserController {
 	 */
 	//!Masha!!!!!!!!!!!!!!!!!!
 	//questions - список вопросов
-	public PtBoolean oeSendQuestionsToHuman(ArrayList<String> questionsList) throws ServerOfflineException, ServerNotBoundException, IncorrectFormatException{
+	public PtBoolean oeSendQuestionsToHuman(CtAdminQuestions questionsList) throws ServerOfflineException, ServerNotBoundException, IncorrectFormatException{
 		ActProxyAdministratorImpl actorAdmin = (ActProxyAdministratorImpl)getAuth();
 		try {
 			//!Masha!!!!!!!!!!!!!!!!!!

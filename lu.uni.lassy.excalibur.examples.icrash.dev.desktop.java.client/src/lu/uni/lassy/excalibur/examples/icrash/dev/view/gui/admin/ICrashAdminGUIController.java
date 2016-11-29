@@ -30,7 +30,9 @@ import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.design.JIntI
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.CtAdminQuestions;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtCoordinatorID;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtQuestion;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.DtString;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.PtBoolean;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.PtInteger;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.PtString;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.utils.Log4JUtils;
 import lu.uni.lassy.excalibur.examples.icrash.dev.model.Message;
@@ -143,8 +145,8 @@ public class ICrashAdminGUIController extends AbstractAuthGUIController {
 			if (statisticOfAnswers != null)
 			{
 				String answer = "";
-				Hashtable <Integer, DtQuestion> tableQuestions = statisticOfAnswers.getHashtable();
-				for (Map.Entry<Integer, DtQuestion> entry : tableQuestions.entrySet())
+				Hashtable <PtInteger, DtQuestion> tableQuestions = statisticOfAnswers.getHashtable();
+				for (Map.Entry<PtInteger, DtQuestion> entry : tableQuestions.entrySet())
 				{
 					DtQuestion question = entry.getValue();
 					answer = answer + question.value.getValue()+"\n";
@@ -169,18 +171,26 @@ public class ICrashAdminGUIController extends AbstractAuthGUIController {
 
 	//!Masha!!!!!!!!!!!!!!!!!!
 	private void sendQuestionToHuman() {
-		ArrayList<String> questionsList = new ArrayList<String>();
-		String question = "Estimate usefulness of system from 1 to 5";
-		questionsList.add(question);
-		question = "Estimate the speed of the answer of system from 1 to 5";
-		questionsList.add(question);
+		Hashtable <PtInteger, DtQuestion> tableQuestions = new Hashtable <PtInteger, DtQuestion>();
+		//ArrayList<String> questionsList = new ArrayList<String>();
+		
+		//String question = "Estimate usefulness of system from 1 to 5";
+		DtQuestion question = new DtQuestion(new PtString("Estimate usefulness of system from 1 to 5"));
+		tableQuestions.put(new PtInteger(0), question);
+		
+		question = new  DtQuestion(new PtString("Estimate the speed of the answer of system from 1 to 5"));
+		tableQuestions.put(new PtInteger(1), question);
+		
+		CtAdminQuestions aCtAdminQuestions = new CtAdminQuestions();
+		
+		aCtAdminQuestions.setHashtable(tableQuestions);
 
 		try{
 			//Если вопросы дошли до сервера то true
-			if (userController.oeSendQuestionsToHuman(questionsList).getValue())
+			if (userController.oeSendQuestionsToHuman(aCtAdminQuestions).getValue())
 				showOKMessage("All is good", "We send questions");
 			else
-			showErrorMessage("Unable to add coordinator", "An error occured when adding the coordinator");
+			showErrorMessage("Unable to send questions", "An error occured when sending a questions");
 		} catch (ServerOfflineException | ServerNotBoundException | IncorrectFormatException e) {
 			showExceptionErrorMessage(e);
 		}	

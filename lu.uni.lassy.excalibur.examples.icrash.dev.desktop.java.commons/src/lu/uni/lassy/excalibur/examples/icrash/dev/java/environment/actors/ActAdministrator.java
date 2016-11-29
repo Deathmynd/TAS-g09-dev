@@ -60,7 +60,7 @@ public interface ActAdministrator extends ActAuthenticated {
 	 * @throws RemoteException Thrown if the server is offline
 	 */
 	//!Masha!!!!!!!!!!!!!!!!!!
-	public PtBoolean oeSendQuestionsToHuman(ArrayList<String> questionsList)
+	public PtBoolean oeSendQuestionsToHuman(CtAdminQuestions questionsList)
 			throws RemoteException, NotBoundException;
 	
 	/**

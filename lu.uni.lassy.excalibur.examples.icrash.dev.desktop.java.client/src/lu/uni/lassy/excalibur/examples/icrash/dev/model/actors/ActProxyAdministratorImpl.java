@@ -69,7 +69,7 @@ public class ActProxyAdministratorImpl extends ActProxyAuthenticatedImpl impleme
 	}
 
 	//!Masha!!!!!!!!!!!!!!!!!!
-	synchronized public PtBoolean oeSendQuestionsToHuman(ArrayList<String> questionsList) throws RemoteException, NotBoundException{
+	synchronized public PtBoolean oeSendQuestionsToHuman(CtAdminQuestions questionsList) throws RemoteException, NotBoundException{
 		if(getServerSideActor() !=null)
 			//!Masha!!!!!!!!!!!!!!!!!!
 			return ((ActAdministrator) getServerSideActor()).oeSendQuestionsToHuman(questionsList);
