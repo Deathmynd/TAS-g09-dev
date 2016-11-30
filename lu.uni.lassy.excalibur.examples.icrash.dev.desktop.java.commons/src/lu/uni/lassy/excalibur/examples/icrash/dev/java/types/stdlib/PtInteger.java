@@ -43,6 +43,16 @@ public class PtInteger implements Serializable {
 		return value;
 	}
 	
+	public void add(PtInteger aInt)
+	{
+		value += aInt.getValue();
+	}
+	
+	public void inc ()
+	{
+		value++;
+	}
+	
 	@Override
 	public boolean equals(Object obj){
 		if (!(obj instanceof PtInteger))

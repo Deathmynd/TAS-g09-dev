@@ -5,6 +5,7 @@ import java.util.Hashtable;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.design.JIntIs;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.DtString;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.PtBoolean;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.PtInteger;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.PtString;
 
 /**
@@ -26,7 +27,7 @@ public class DtQuestion extends DtString implements JIntIs{
 	/** Statistics of answers */
 	
 	//Здесь статистика ответов "номер ответа: количество ответов"
-	private Hashtable<Integer,Integer> answersStatistic = new Hashtable<Integer, Integer>();
+	private Hashtable<PtInteger,PtInteger> answersStatistic = new Hashtable<PtInteger, PtInteger>();
 	
 	/**
 	 * Instantiates a new datatype login.
@@ -38,7 +39,7 @@ public class DtQuestion extends DtString implements JIntIs{
 		
 		for (int i = minAnswerValue; i<=maxAnswerValue; i++)
 		{
-			answersStatistic.put(i, 0);
+			answersStatistic.put(new PtInteger(i), new PtInteger(0));
 		}
 	}
 	
@@ -56,17 +57,18 @@ public class DtQuestion extends DtString implements JIntIs{
 	 * @return true, if counter incremented
 	 * 			false, if answer doesn't exist
 	 */
-	public PtBoolean putAnswer(Integer key)
+	public PtBoolean putAnswer(PtInteger key)
 	{
-		if (minAnswerValue <= key && key <= maxAnswerValue)
+		int aKey = key.getValue();
+		if (minAnswerValue <= aKey && aKey <= maxAnswerValue)
 		{
-			answersStatistic.put(key, answersStatistic.get(key)+1);
+			answersStatistic.get(key).inc();
 			return new PtBoolean(true);
 		}
 		return new PtBoolean(false);
 	}
 	
-	public PtBoolean putTableWithAnswers(Hashtable<Integer,Integer> newTable)
+	public PtBoolean putTableWithAnswers(Hashtable<PtInteger,PtInteger> newTable)
 	{
 		answersStatistic = newTable;
 		
@@ -76,12 +78,12 @@ public class DtQuestion extends DtString implements JIntIs{
 	/**
 	 * @return The number of the answered humans
 	 */
-	public int getSizeOfAnswers()
+	public PtInteger getSizeOfAnswers()
 	{
-		int size = 0;
+		PtInteger size = new PtInteger(0);
 		for (int i =0; i<maxAnswerValue; i++)
 		{
-			size += answersStatistic.get(i);
+			size.add(answersStatistic.get(new PtInteger(i)));
 		}
 		return size;
 	}
@@ -92,7 +94,7 @@ public class DtQuestion extends DtString implements JIntIs{
 	 */
 	public int getAnswer(int key)
 	{
-		return answersStatistic.get(key);
+		return answersStatistic.get(key).getValue();
 	}
 	
 	public int getMinAnswerValue()

@@ -685,7 +685,7 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 						if (aDtQuestion.getMinAnswerValue() <= intComment &&
 								intComment <= aDtQuestion.getMaxAnswerValue())
 						{
-							aDtQuestion.putAnswer(intComment);
+							aDtQuestion.putAnswer(new PtInteger(intComment));
 							return new PtBoolean(true);
 						}
 					}
