@@ -19,12 +19,16 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
+
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.IcrashSystem;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtComment;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtGPSLocation;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPhoneNumber;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtHumanKind;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.secondary.DtCachedSms;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.secondary.DtSMS;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.DtDate;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.DtTime;
@@ -47,6 +51,7 @@ public class ActComCompanyImpl extends UnicastRemoteObject implements ActComComp
 	 */
 	private int _id;
 
+	Queue<DtCachedSms> aCachedSms = new LinkedList<DtCachedSms>();
 	/**
 	 * Instantiates a new server side actor for the communication company. This is the implemented version of the actor
 	 *
@@ -136,15 +141,28 @@ public class ActComCompanyImpl extends UnicastRemoteObject implements ActComComp
 		log.info("message ActComCompany.ieSmsSend received from system");
 		log.info("Phone number: " + aDtPhoneNumber.value.getValue());
 		log.info("SMS: " + aDtSMS.value.getValue());
+		
+		aCachedSms.add(new DtCachedSms(aDtPhoneNumber, aDtSMS));
+		
 		boolean messageSent = false;
 		for (Iterator<ActProxyComCompany> iterator = listeners.iterator(); iterator
 				.hasNext();) {
 			ActProxyComCompany aProxy = iterator.next();
+			int k =1;
 			try {
-				aProxy.ieSmsSend(aDtPhoneNumber, aDtSMS);
-				messageSent = true;
+//				if(k==1)
+//				throw new RemoteException();
+								
+				while (aCachedSms.peek() != null)
+				{
+					DtCachedSms aQueueSms = aCachedSms.peek();
+					aProxy.ieSmsSend(aQueueSms.phone, aQueueSms.sms);
+					messageSent = true;
+					aCachedSms.remove();
+				}
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			} catch (RemoteException e) {
+				//aCachedSms.add(new DtCachedSms(aDtPhoneNumber, aDtSMS));
 				//Most likely the client that created the listener disconnected, so we shall remove it
 				log.error(e);
 				iterator.remove();
